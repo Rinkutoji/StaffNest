@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* =========================================================
+   StaffNest design tokens
+   A professional, data-forward palette for an internal HR tool.
+   Supports light (default) and dark themes via the `.dark` class
+   on <html>, toggled by ThemeContext.
+   ========================================================= */
+:root {
+  /* Surfaces */
+  --canvas: #f5f6f8;
+  --surface: #ffffff;
+  --surface-hover: #f8f9fb;
+  --border: #e7e9ef;
+  --border-strong: #d7dae2;
+
+  /* Text */
+  --ink: #161a23;
+  --ink-soft: #5b6472;
+  --ink-faint: #9aa1b0;
+
+  /* Sidebar (stays dark in both themes) */
+  --sidebar-bg: #0f1320;
+  --sidebar-bg-active: #1a2036;
+  --sidebar-text: #aab0c2;
+  --sidebar-text-active: #ffffff;
+
+  /* Accent (indigo) */
+  --accent: #375dfb;
+  --accent-hover: #2c4de0;
+  --accent-soft: rgba(55, 93, 251, 0.12);
+
+  /* Status */
+  --success: #189a6d;
+  --success-soft: rgba(24, 154, 109, 0.14);
+  --warning: #d8992e;
+  --warning-soft: rgba(216, 153, 46, 0.16);
+  --danger: #e2483f;
+  --danger-soft: rgba(226, 72, 63, 0.13);
+
+  /* Department accent hues (chips, chart bars, badge stripes) */
+  --dept-1: #375dfb; /* indigo   */
+  --dept-2: #189a6d; /* emerald  */
+  --dept-3: #d8992e; /* amber    */
+  --dept-4: #c2478d; /* magenta  */
+  --dept-5: #2aa9c7; /* cyan     */
+  --dept-6: #7c5cf0; /* violet   */
+  --dept-fallback: #9aa1b0;
+
+  --skeleton-base: #eceef2;
+  --skeleton-shine: #f5f6f8;
+
+  --font-display: "Sora", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  color-scheme: light;
+}
+
+:root.dark {
+  --canvas: #0b0e17;
+  --surface: #131826;
+  --surface-hover: #1a2035;
+  --border: #232a3d;
+  --border-strong: #2d3550;
+
+  --ink: #eef0f5;
+  --ink-soft: #a3aabd;
+  --ink-faint: #6b7690;
+
+  --accent: #5b7dff;
+  --accent-hover: #4468ff;
+
+  --skeleton-base: #1a2035;
+  --skeleton-shine: #232a3d;
+
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Scrollbar - subtle, not the browser default */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visible keyboard focus ring everywhere */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Shared animation utility classes */
+@keyframes fadeRise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-rise {
+  animation: fadeRise 0.35s ease-out both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-in {
+  animation: modalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 37%, var(--skeleton-base) 63%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}

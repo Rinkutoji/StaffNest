@@ -1,0 +1,4 @@
+# Security: uploaded files should never be executed as PHP scripts.
+<FilesMatch "\.(php|phar|phtml)$">
+    Require all denied
+</FilesMatch>
