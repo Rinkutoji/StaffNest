@@ -1,25 +1,23 @@
 <?php
 /**
  * Database connection (PDO)
- * Adjust these values to match your local XAMPP / MySQL setup.
+ * Automatically loads Environment Variables on Render, with fallback defaults for local XAMPP.
  */
 
-// The whole app (attendance clock in/out, "today" for leave/payroll, etc.)
-// should run on Cambodia time, regardless of what timezone the underlying
-// server/OS happens to be set to (many servers default to UTC). This one
-// line fixes every date()/time()/strtotime() call in every PHP file that
-// includes this config, since it's required by virtually every endpoint.
+// Force Cambodia timezone (UTC+7) for all PHP date/time calculations
 date_default_timezone_set('Asia/Phnom_Penh');
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'employee_management');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // XAMPP default root password is empty
+// Read Render Environment Variables with local XAMPP fallback defaults
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_PORT', getenv('DB_PORT') ?: '3306');
+define('DB_NAME', getenv('DB_NAME') ?: 'employee_management');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : '');
 
 function getDBConnection()
 {
     try {
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
+        $dsn = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4';
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -27,12 +25,7 @@ function getDBConnection()
         ];
         $db = new PDO($dsn, DB_USER, DB_PASS, $options);
 
-        // MySQL's own NOW()/CURDATE()/CURRENT_TIMESTAMP/CURRENT_DATE() use
-        // the MySQL *server's* timezone setting, not PHP's - so the line
-        // above alone isn't enough. Cambodia is UTC+7 year-round (no DST),
-        // so setting a fixed offset here works correctly regardless of the
-        // server's own system/global timezone configuration, and needs no
-        // special MySQL timezone-table setup.
+        // Keep MySQL session timezone synchronized with Cambodia (+07:00)
         $db->exec("SET time_zone = '+07:00'");
 
         return $db;
