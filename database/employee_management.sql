@@ -4,10 +4,10 @@
 -- Import this file via phpMyAdmin (or `mysql -u root -p < employee_management.sql`)
 -- =========================================================
 
-CREATE DATABASE IF NOT EXISTS employee_management
-  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- CREATE DATABASE IF NOT EXISTS employee_management
+--   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE employee_management;
+-- USE employee_management;
 
 -- ---------------------------------------------------------
 -- Table: users  (login accounts / roles)
