@@ -156,12 +156,12 @@ CREATE TABLE candidates (
 -- Seed data
 -- ---------------------------------------------------------
 
--- Default admin login -> email: admin@ems.com / password: admin123
+-- Default admin login -> email: admin@ems.com / password: Admin12345$
 INSERT INTO users (name, email, password, role) VALUES
-('System Admin', 'admin@ems.com', '$2y$10$kQdeQ5iEfY5S22C00VYsEOdpIbSZ25t.pULS4erPO3WfvLHLu5R0W', 'admin'),
-('HR Manager', 'hr@ems.com', '$2y$10$kQdeQ5iEfY5S22C00VYsEOdpIbSZ25t.pULS4erPO3WfvLHLu5R0W', 'hr'),
-('Employee Demo', 'employee@ems.com', '$2y$10$kQdeQ5iEfY5S22C00VYsEOdpIbSZ25t.pULS4erPO3WfvLHLu5R0W', 'employee');
--- (both accounts use the password: admin123)
+('System Admin', 'admin@ems.com', '$2y$12$GOABmnH0DeJYHB0eKxMscOitDRRjpWRByT3YOAu1ioNVnTMMg7J76', 'admin'),
+('HR Manager', 'hr@ems.com', '$2y$12$GOABmnH0DeJYHB0eKxMscOitDRRjpWRByT3YOAu1ioNVnTMMg7J76', 'hr'),
+('Employee Demo', 'employee@ems.com', '$2y$12$GOABmnH0DeJYHB0eKxMscOitDRRjpWRByT3YOAu1ioNVnTMMg7J76', 'employee');
+-- (all three accounts use the password: Admin12345$)
 
 INSERT INTO departments (name, description) VALUES
 ('IT Department', 'Handles software, infrastructure and technical support'),

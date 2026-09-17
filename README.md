@@ -95,9 +95,9 @@ ems/
 **Demo accounts (seeded):**
 | Email | Password | Role | Login page |
 |---|---|---|---|
-| admin@ems.com | admin123 | Admin | Staff Login (`/login`) |
-| hr@ems.com | admin123 | HR | Staff Login (`/login`) |
-| employee@ems.com | admin123 | Employee | Employee Login (`/employee-login`) |
+| admin@ems.com | Admin12345$ | Admin | Staff Login (`/login`) |
+| hr@ems.com | Admin12345$ | HR | Staff Login (`/login`) |
+| employee@ems.com | Admin12345$ | Employee | Employee Login (`/employee-login`) |
 
 ---
 
@@ -255,7 +255,7 @@ rather than silently overwriting the first entry.
 - **"Could not save the uploaded image"**: `backend/uploads/profiles`
   isn't writable by Apache. Run `chmod -R 777` on that folder (fine for
   local dev, not for production).
-- **Login says invalid password**: demo accounts use `admin123`, not `admin`.
+- **Login says invalid password**: demo accounts use `Admin12345$`, not `admin123`.
 
 ---
 
