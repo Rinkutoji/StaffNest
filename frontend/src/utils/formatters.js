@@ -1,4 +1,10 @@
 export function getErrorMessage(error, fallback = 'Something went wrong. Please try again.') {
+  if (error?.code === 'ECONNABORTED' || error?.message?.includes('timeout')) {
+    return 'Server is starting up — please wait a moment and try again.';
+  }
+  if (error?.code === 'ERR_NETWORK' || !error?.response) {
+    return 'Cannot reach the server. Please check your connection and try again.';
+  }
   return error?.response?.data?.message || fallback;
 }
 
