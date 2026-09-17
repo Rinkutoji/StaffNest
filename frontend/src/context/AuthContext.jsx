@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login(email, password, allowedRoles = null) {
-    const res = await api.post('/api/auth/login.php', { email, password });
+    const res = await api.post('/backend/api/auth/login.php', { email, password });
     const { token, user: loggedInUser } = res.data.data;
 
     // Keep Staff Login and Employee Login as two separate doors: if someone
