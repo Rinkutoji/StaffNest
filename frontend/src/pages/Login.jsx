@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getErrorMessage } from '../utils/formatters';
-import api from '../api/axios';
 
 export default function Login() {
   const { login } = useAuth();
@@ -13,11 +12,17 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  // null = unknown, true = warming up, false = ready
+  const [warming, setWarming] = useState(null);
 
-  // Silently wake up the Render backend the moment the page loads
-  // so it is ready by the time the user finishes typing and clicks Sign In.
+  // Wake up the Render backend on mount using native fetch (no timeout cap).
+  // Shows a visible banner while the server is booting so users know to wait.
   useEffect(() => {
-    api.get('/index.php').catch(() => {});
+    const baseURL = import.meta.env.VITE_API_BASE_URL || 'https://staffnest-backend.onrender.com';
+    setWarming(true);
+    fetch(`${baseURL}/index.php`)
+      .then(() => setWarming(false))
+      .catch(() => setWarming(false)); // even on network error, stop the banner
   }, []);
 
   async function handleSubmit(e) {
@@ -140,6 +145,13 @@ export default function Login() {
                 </button>
               </div>
             </div>
+
+            {warming && (
+              <p className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm" style={{ background: 'var(--warning-soft, #fef3c7)', color: 'var(--warning, #92400e)' }}>
+                <Loader size={14} className="animate-spin" />
+                Waking up server — please wait a moment…
+              </p>
+            )}
 
             {error && (
               <p className="rounded-lg px-3 py-2 text-sm" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>
