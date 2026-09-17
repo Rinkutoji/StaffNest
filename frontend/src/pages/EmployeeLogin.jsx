@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getErrorMessage } from '../utils/formatters';
+import api from '../api/axios';
 
 export default function EmployeeLogin() {
   const { login } = useAuth();
@@ -12,6 +13,12 @@ export default function EmployeeLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Silently wake up the Render backend the moment the page loads
+  // so it is ready by the time the user finishes typing and clicks Sign In.
+  useEffect(() => {
+    api.get('/index.php').catch(() => {});
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://staffnest-backend.onrender.com',
-  timeout: 15000, // 15 s — fail fast instead of hanging on Render cold-starts
+  timeout: 30000, // 30 s — Render free tier cold-starts can take up to ~30 s
 });
 
 // Attach the saved token to every outgoing request
